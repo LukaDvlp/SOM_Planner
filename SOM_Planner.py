@@ -573,12 +573,14 @@ class PathAdapt():
         for a in range(len(MoveRobot)):
             for b in MoveRobot[a]:
                 IDlist.append(b)
+        print("IDlist desu {0}".format(IDlist))
         for r1 in range(len(MoveRobot)):
             #print("\n\n r1 desu {0}".format(r1))
             for r2 in MoveRobot[r1]:
                 #print("\n\n r2 desu {0}".format(r2))
                 for w in WyPts[r2[0]]: #WyPts[RobotID]
                     nghbr_id = WyPts[r2[0]].index(w)
+                    print("nghbr_id is {0} at RobotID is {1}".format(nghbr_id,r2[0]))
                     if nghbr_id!=0 and nghbr_id!=r2[1] and [r2[0],nghbr_id] not in IDlist and nghbr_id is not None:
                         w_=self.Nghbr_Adapt(w,WyPts[r2[0]][r2[1]],r2[1],nghbr_id,self.G)
                         WyPts[r2[0]][nghbr_id] = w
@@ -622,7 +624,8 @@ class PathAdapt():
                         win_id = New_WyPts.index(x)
                         if win_id==0:
                             win_id+=1
-                        elif win_id==self.HopNum:
+                        #elif win_id==self.HopNum:
+                        elif win_id%self.HopNum==0:
                             win_id-=1
                     
                     if (win_id !=0) and win_id is not None:
@@ -648,26 +651,12 @@ class PathAdapt():
                     #self.WyPts[robo] = New_WyPts #WyPts should be Tmp
                     WyPts_Tmp[robo] = New_WyPts #WyPts should be Tmp
                 RIndex = self.WinRobot(WyPts_Tmp,WyPts_Avairable,node)  #Best robot selection. For other robots path, ignore
-                #print("\n\n RIndex at Epoch {0}, NodeNum {1} is {2}".format(i,NodeNum,RIndex))
+                print("\n\n RIndex at Epoch {0}, NodeNum{1}:{2} is {3}".format(i,NodeNum,node,RIndex))
                 #Error=max(Error,self.TwoD_Dis(self.WyPts[RIndex][win_id_store[RIndex]],node))
                 if RIndex is not None:
                     if win_id_store[RIndex] is not None:
                         Flags[RIndex][win_id_store[RIndex]] = 1
                         self.WyPts[RIndex] = WyPts_Tmp[RIndex]
-                        ## NEW  preservation at every Iteration ##
-                        #self.WyPts = self.ComRefine(self.WyPts, self.MaxRange, [0,0])
-                        #self.ComRefine(self.WyPts, self.MaxRange, [0,0])
-                        #if i % 10 == 0:     # one in ten epoch, one waypoint in Waypoints, add constraint
-                        #    print("Constraint Hatudou!")
-                        #    kk=1
-                        #    while kk < self.HopNum:
-                        #        print("kk desu {0}".format(kk))
-                                #MoveRobotID = self.NetworkPreservation(self.WyPts,kk)
-                                #print("\n\n Rifine Mae {0}".format(self.WyPts))
-                        #        self.NetworkPreservation(self.WyPts,kk)
-                                #print("\n\n Rifine Ato {0}".format(self.WyPts))
-                        #        kk += int(self.HopNum/10)
-                        #        kk+=5
                         ErrorCount += 1
                         Error=max(Error,self.TwoD_Dis(self.WyPts[RIndex][win_id_store[RIndex]],node))
                         #print("\n\n Error at iteration {0} desu {1} Node ha {2} WyPt ha {3}".format(i,Error,node,self.WyPts[RIndex][win_id_store[RIndex]]))
@@ -703,14 +692,15 @@ class PathAdapt():
                         pass
                     else:
                         #print("kk desu {0},self.Freq ha {1}".format(kk,self.Freq))
-                        #MoveRobotID = self.NetworkPreservation(self.WyPts,kk)
-                        #self.NetworkPreservation(self.WyPts,kk)
                         #MoveRobot = self.NetworkPreservation(self.WyPts,kk)    # Cooperation
                         MoveRobot = self.NetworkPreservation2(self.WyPts,kk)   # No cooperation
                         if MoveRobot is not None:
+                            print("kk is {0}".format(kk))
                             self.NeighbourAdapt2(self.WyPts,MoveRobot)
                             for ab in range(len(MoveRobot)):
+                                print("MoveRobot[ab] desu {0}".format(MoveRobot[ab]))
                                 for bc in MoveRobot[ab]:
+                                    print("bc[0] desu {0}, bc[1] is {1}".format(bc[0],bc[1]))
                                     self.Max[bc[0]]=max(self.Max[bc[0]],bc[1])
                         #kk += int(self.HopNum/5)
                     kk+=self.Freq

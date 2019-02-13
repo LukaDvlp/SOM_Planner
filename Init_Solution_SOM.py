@@ -81,15 +81,16 @@ if __name__=="__main__":
     #Parameters
     G0s = [10.0,0.1,0.01]
     Mus = [0.1,0.5,0.9]
-    Alphas = [0.01,0.08,0.5]
+    Alphas = [0.01,0.05,0.5]
     NIs = [1,2,3]
     NNum = int(args[1])
     Max_Ite=int(args[2])
-    G = G0s[int(args[3])]*NNum
-    #G = 0.06 + 12.4*NNum # G = 0.06 +12.4 n
+    #G = G0s[int(args[3])]*NNum
+    G = 0.06 + 12.4*NNum # G = 0.06 +12.4 n
     mu = Mus[int(args[4])] 
     alpha = Alphas[int(args[5])]
     NIndex = NIs[int(args[6])]
+    print("NNum:{0},G:{1},alpha:{2}".format(NNum,G,alpha))
     SRange = 4
     Width = 40
     with open("Init_Goals_Tup.pickle",mode="rb") as fn:
@@ -98,14 +99,10 @@ if __name__=="__main__":
     MaxRange = 0.1
     th = 0
     Robots = 2
-    GPos = [[[0,10],[0,15]],[[10,0],[15,0]]]
+    GPos = [[[0,20],[0,40]],[[20,0],[40,0]]]
     HopNum = int(NNum*NIndex/Robots) 
     #Freq = HopNum-1   #Constraint Frequency
     Freq = int(HopNum/2)   #Constraint Frequency
-    #if float(args[4])==-1:
-    #    G = 0.06 + 12.4*len(Nodes) # G = 0.06 +12.4 n
-    #else:
-    #    G = float(args[4])
     Minimum = 0.1  # Allowable Maximum Distance from Nodes
     pos = [[0,0+0.001*o] for o in range(Robots)]
     BS = [0,0]
