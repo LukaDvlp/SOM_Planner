@@ -1,231 +1,4 @@
 from Plots import Plots
-##Class: Plot Functions
-#class Plots():
-#    
-#    def __init__(self,W,Nodes,Robots):
-#        self.W = W
-#        self.Nodes = Nodes 
-#        self.Robots = Robots
-#        self.colors = ["red","blue","orange","green","purple","coral","darkgoldenrod","greenyellow", \
-#                       "aqua","indigo","lightpink","grey","pink","magenta","darkkhaki","lime","lightskyblue","black","saddlebrown", "olive"]
-#        self.TM_thin = 1
-#        self.Index = int(len(W[0])/Robots)-1
-#        self.lines = [[] for q in range(Robots)]
-#        
-#    def StaticPlot(self,fig,ax,ite,xlim,ylim,Range,save=False, filename=""):
-#        e=0
-#        ee=0
-#        x = [[] for e in range(self.Robots)]
-#        y = [[] for ee in range(self.Robots)]
-#        
-#        #p=0
-#        rr=0
-#        jj=0
-#        for rr in range(self.Robots):
-#            p=0
-#            for jj in range(int((self.Index+1)/2)):
-#                x[rr].append(self.W[ite][rr*(self.Index+1)+p])
-#                y[rr].append(self.W[ite][rr*(self.Index+1)+p+1])
-#                p+=2
-#            
-#        #L = len(x[0])-1
-#        rrr=0
-#        n=0
-#        for rrr in range(self.Robots):
-#            ax.plot(x[rrr],y[rrr],"X-",color=self.colors[rrr])    
-#        ax.text(0.05,0.9,"Epoch:{0}".format(ite), transform=ax.transAxes)
-#        for n in self.Nodes:
-#            c = patches.Circle(xy=n,radius=0.2,color="blue")
-#            ax.add_patch(c)
-#        RC = patches.Circle(xy=Range[0], radius=Range[1], ec="red", fill=False)
-#        ax.add_patch(RC)
-#            
-#        #ax2.plot(3,3,"X")
-#        #print("W is {0}".format(np.array(self.W)))
-#        #print("X is {0}, Y is {1}".format(x,y))
-#        ax.set_xlim(xlim)
-#        ax.set_ylim(ylim)
-#        plt.grid() 
-#        if save:
-#            fig.savefig(filename)
-#        else:
-#            pass
-#        
-#    def StaticPlot2(self,fig,ax,ite,xlim,ylim,Range,Step,HopNum,save=False, filename=""):
-#        e=0
-#        ee=0
-#        x = [[] for e in range(self.Robots)]
-#        y = [[] for ee in range(self.Robots)]
-#        X_ = [[] for e2 in range(self.Robots)]     # For Exclamation
-#        Y_ = [[] for ee2 in range(self.Robots)]    # For Exclamation
-#        
-#        #p=0
-#        rr=0
-#        jj=0
-#        for rr in range(self.Robots):
-#            p=0
-#            for jj in range(int((self.Index+1)/2)):
-#                x[rr].append(self.W[ite][rr*(self.Index+1)+p])
-#                y[rr].append(self.W[ite][rr*(self.Index+1)+p+1])
-#                if (jj-1)%Step==0 and jj-1!=0:
-#                    X_[rr].append(self.W[ite][rr*(self.Index+1)+p])
-#                    Y_[rr].append(self.W[ite][rr*(self.Index+1)+p+1])
-#                    #X_[rr].append(self.W[ite][rr*(self.Index+1)+p+2])
-#                    #Y_[rr].append(self.W[ite][rr*(self.Index+1)+p+1+2])
-#                p+=2
-#        #print("\n X_ desu {0}".format(X_))
-#        #print("\n Y_ desu {0}".format(Y_))
-#        #L = len(x[0])-1
-#        rrr=0
-#        n=0
-#       
-#        for rrr in range(self.Robots):
-#            ax.plot(x[rrr],y[rrr],"X-",color=self.colors[rrr])
-#            #ax.plot(X_[rrr],Y_[rrr],"X",color=self.colors[rrr])
-#            Num=0
-#            #for Num in range(int(HopNum/Step)):
-#            ax.plot(0,0,"*",color=self.colors[Num],markersize=15)
-#            for Num in range(len(X_[rrr])):
-#                ax.plot(X_[rrr][Num],Y_[rrr][Num],"*",color=self.colors[Num],markersize=15)
-#                #print("Num desu {0}".format(Num))#ax.plot(X_[rrr][Num],Y_[rrr][Num],"*",color=self.colors[Num],markersize=15)
-#                #print("X_ desu {0}".format(X_))
-#                Num+=1
-#        ax.text(0.05,0.9,"Epoch:{0}".format(ite), transform=ax.transAxes,fontsize=15)
-#        for n in self.Nodes:
-#            c = patches.Circle(xy=n,radius=0.2,color="blue")
-#            ax.add_patch(c)
-#        #RC = patches.Circle(xy=Range[0], radius=Range[1], ec="red", fill=False)
-#        #ax.add_patch(RC)   
-#        #ax2.plot(3,3,"X")
-#        #print("W is {0}".format(np.array(self.W)))
-#        #print("X is {0}, Y is {1}".format(x,y))
-#        ax.set_xlim(xlim)
-#        ax.set_ylim(ylim)
-#        ax.tick_params(labelsize=18)
-#        plt.grid() 
-#        if save:
-#            fig.savefig(filename)
-#        else:
-#            pass
-#    
-#    def StaticPlotNode(self,fig,ax,ite,xlim,ylim,Range,Step,HopNum,save=False, filename=""):
-#        e=0
-#        ee=0
-#        x = [[] for e in range(self.Robots)]
-#        y = [[] for ee in range(self.Robots)]
-#        X_ = [[] for e2 in range(self.Robots)]     # For Exclamation
-#        Y_ = [[] for ee2 in range(self.Robots)]    # For Exclamation
-#        
-#        #p=0
-#        rr=0
-#        jj=0
-#        for rr in range(self.Robots):
-#            p=0
-#            for jj in range(int((self.Index+1)/2)):
-#                x[rr].append(self.W[ite][rr*(self.Index+1)+p])
-#                y[rr].append(self.W[ite][rr*(self.Index+1)+p+1])
-#                if (jj-1)%Step==0 and jj-1!=0:
-#                    X_[rr].append(self.W[ite][rr*(self.Index+1)+p])
-#                    Y_[rr].append(self.W[ite][rr*(self.Index+1)+p+1])
-#                    #X_[rr].append(self.W[ite][rr*(self.Index+1)+p+2])
-#                    #Y_[rr].append(self.W[ite][rr*(self.Index+1)+p+1+2])
-#                p+=2
-#        #print("\n X_ desu {0}".format(X_))
-#        #print("\n Y_ desu {0}".format(Y_))
-#        #L = len(x[0])-1
-#        rrr=0
-#        n=0
-#       
-#        #for rrr in range(self.Robots):
-#        #    ax.plot(x[rrr],y[rrr],"X-",color=self.colors[rrr])
-#        #    #ax.plot(X_[rrr],Y_[rrr],"X",color=self.colors[rrr])
-#        #    Num=0
-#        #    #for Num in range(int(HopNum/Step)):
-#        #    for Num in range(len(X_[rrr])):
-#        #        ax.plot(X_[rrr][Num],Y_[rrr][Num],"*",color=self.colors[Num],markersize=15)
-#        #        Num+=1
-#        #ax.text(0.05,0.9,"Iteration={0}".format(ite), transform=ax.transAxes)
-#        for n in self.Nodes:
-#            c = patches.Circle(xy=n,radius=0.2,color="blue")
-#            ax.add_patch(c)
-#        RC = patches.Circle(xy=Range[0], radius=Range[1], ec="red", fill=False)
-#        #ax.add_patch(RC)   
-#        #ax2.plot(3,3,"X")
-#        #print("W is {0}".format(np.array(self.W)))
-#        #print("X is {0}, Y is {1}".format(x,y))
-#        ax.set_xlim(xlim)
-#        ax.set_ylim(ylim)
-#        plt.grid() 
-#        if save:
-#            fig.savefig(filename)
-#        else:
-#            pass
-#        
-#    def init_ani(self):
-#        ttt=0
-#        for ttt in range(self.Robots):
-#            self.lines[ttt].set_data([], [])
-#        self.time_text.set_text('')
-#        return self.lines, self.time_text
-#    
-#    def animate(self,i):
-#        thisx=[[] for x_num in range(self.Robots)]
-#        thisy=[[] for y_num in range(self.Robots)]
-#        c = 0
-#        r_num=0
-#        ttt=0
-#        while c < self.Index:
-#            for r_num in range(self.Robots):
-#                thisx[r_num].append(self.W[i*self.TM_thin][r_num*(self.Index+1)+c])
-#                thisy[r_num].append(self.W[i*self.TM_thin][r_num*(self.Index+1)+c+1])
-#                #thisx2.append(W[i*TM_thin][Index+c])
-#                #thisy2.append(W[i*TM_thin][Index+c+1])
-#            c += 2
-#            
-#        #line1.set_data(thisx1, thisy1)
-#        #line2.set_data(thisx2, thisy2)
-#        for tttt in range(self.Robots):
-#            self.lines[tttt].set_data(thisx[tttt], thisy[tttt])
-#        self.time_text.set_text("Iteration: {0}".format(int(i)))
-#        #return line1, line2, time_text
-#        return self.lines, self.time_text
-#    
-#    def ShowAnime(self,fig,ax):
-#        #lines = [[] for q in range(Robots)]
-#        #colors = ["red", "blue", "yellow", "green", "purple"]
-#        #print("self.W shape desu {0}".format(np.shape(self.W)))
-#        #print("self.Index desu {0}".format(self.Index))
-#        #print("self.W desu {0}".format(self.W))
-#        #print("self.lines[5] desu {0}".format(self.lines[5]))
-#        tt=0
-#        n=0
-#        for tt in range(self.Robots):
-#            #print("tt desu {0}".format(tt))
-#            self.lines[tt], = ax.plot([],[], 'X-', lw=1, markersize=10, color = self.colors[tt])
-#            #line2, = ax.plot([],[], 'X-', lw=1, markersize=10, color = "blue")
-#        time_template = 'time = %.1fs'
-#        #time_text = ax.text(0.05, 0.9, '', transform=ax.transAxes)
-#        
-#        for n in self.Nodes:
-#            c = patches.Circle(xy=n,radius=0.2,color="blue")
-#            ax.add_patch(c)
-#            
-#        plt.xlim(-20,20)
-#        plt.ylim(-20,20)
-#        plt.grid()
-#        ani = animation.FuncAnimation(fig, self.animate, np.arange(0, len(self.W)),
-#                                      interval=25, blit=False, init_func=self.init_ani)
-
-#class Robot():
-#    #parent = []   Finally I understood how class member/ Instance member works!
-#    def __init__(self,parent,pos,ID):
-#        self.parent = []
-#        self.child = []
-#        if parent is not None: # Parent Robot of the robot
-#            self.parent.append(parent)
-#        self.pos = pos        # Position of the robot
-#        self.ID = ID          # ID of the robot (robot No. WayPoint No)
-#        self.Flag = False   # Once moved, Flag is True
 
 # MultiRobots-Path Plan Koushi-Exploration    # Nigouki, Const, Reward, Budged OK 2018/11/13
 import numpy as np
@@ -308,30 +81,33 @@ if __name__=="__main__":
     #Parameters
     G0s = [10.0,0.1,0.01]
     Mus = [0.1,0.5,0.9]
-    Alphas = [0.01,0.1,0.5]
+    Alphas = [0.01,0.08,0.5]
     NIs = [1,2,3]
     NNum = int(args[1])
     Max_Ite=int(args[2])
     G = G0s[int(args[3])]*NNum
+    #G = 0.06 + 12.4*NNum # G = 0.06 +12.4 n
     mu = Mus[int(args[4])] 
     alpha = Alphas[int(args[5])]
     NIndex = NIs[int(args[6])]
     SRange = 4
-    Width = 10
+    Width = 40
     with open("Init_Goals_Tup.pickle",mode="rb") as fn:
         Nodes = pickle.load(fn)
     
     MaxRange = 0.1
     th = 0
-    Robots = 1
+    Robots = 2
+    GPos = [[[0,10],[0,15]],[[10,0],[15,0]]]
     HopNum = int(NNum*NIndex/Robots) 
-    Freq = HopNum-1   #Constraint Frequency
+    #Freq = HopNum-1   #Constraint Frequency
+    Freq = int(HopNum/2)   #Constraint Frequency
     #if float(args[4])==-1:
     #    G = 0.06 + 12.4*len(Nodes) # G = 0.06 +12.4 n
     #else:
     #    G = float(args[4])
     Minimum = 0.1  # Allowable Maximum Distance from Nodes
-    pos = [[0,0] for o in range(20)]
+    pos = [[0,0+0.001*o] for o in range(Robots)]
     BS = [0,0]
     r=0.01
     Conv=0
@@ -340,7 +116,7 @@ if __name__=="__main__":
         travel_budged.append(10000)
     WyPts = InitWayPoints([],r,pos,HopNum,Robots)
     WyPts = AddPos(pos,WyPts,Robots,0)
-    Result = PathAdapt(pos,Nodes,WyPts,mu,alpha,Robots,HopNum,MaxRange,r,G,Minimum,travel_budged,BS,Freq,Max_Ite)
+    Result = PathAdapt(pos,Nodes,WyPts,mu,alpha,Robots,HopNum,MaxRange,r,G,Minimum,travel_budged,BS,Freq,Max_Ite,GPos)
     W = Result.W
     Rwd = Result.Reward
     B_Rwd = Result.B_Reward
@@ -390,82 +166,78 @@ if __name__=="__main__":
         
     ## For Plotting    
     P=Plots(W,Nodes,Robots)
-#    if int(args[15])==1:
-#        # Animation
-#        fig = plt.figure()
-#        ax = plt.axes()
-#        #P.ShowAnime(fig,ax)
-#        lines = [[] for q in range(Robots)]
-#        #colors = ["red", "blue", "yellow", "green", "purple"]
-#        colors = ["red","blue","yellow","green","purple","coral","darkgoldenrod","greenyellow", \
-#                           "aqua","indigo","lightpink","grey"]
-#        for tt in range(Robots):
-#            lines[tt], = ax.plot([],[], 'X-', lw=1, markersize=10, color = colors[tt])
-#        #    #line2, = ax.plot([],[], 'X-', lw=1, markersize=10, color = "blue")
-#        time_template = 'time = %.1fs'
-#        time_text = ax.text(0.05, 0.9, '', transform=ax.transAxes)
-#        
-#        def init():
-#            for ttt in range(Robots):
-#                lines[ttt].set_data([], [])
-#            #line2.set_data([], [])
-#            time_text.set_text('')
-#            #return line1, line2, time_text
-#            return lines, time_text
-#        
-#        
-#        TM_thin = 1
-#        Index = int(len(W[0])/Robots)-1
-#        #print(Index)
-#        def animate(i):
-#            thisx=[[] for x_num in range(Robots)]
-#            thisy=[[] for y_num in range(Robots)]
-#            c = 0
-#            while c < Index:
-#                for r_num in range(Robots):
-#                    thisx[r_num].append(W[i*TM_thin][r_num*(Index+1)+c])
-#                    thisy[r_num].append(W[i*TM_thin][r_num*(Index+1)+c+1])
-#                    #thisx2.append(W[i*TM_thin][Index+c])
-#                    #thisy2.append(W[i*TM_thin][Index+c+1])
-#                c += 2
-#                
-#            #line1.set_data(thisx1, thisy1)
-#            #line2.set_data(thisx2, thisy2)
-#            for tttt in range(Robots):
-#                lines[tttt].set_data(thisx[tttt], thisy[tttt])
-#            time_text.set_text("Epoch: {0}".format(int(i)))
-#            #return line1, line2, time_text
-#            return lines, time_text
-#        
-#        for n in Nodes:
-#            c = patches.Circle(xy=n,radius=0.2,color="blue")
-#            ax.add_patch(c)
-#            #ax.plot(w[0],w[1],"X", color="red", markersize=10)
-#           
-#        #plt.xlim(-22,22)
-#        #plt.ylim(-22,27)
-#        plt.xlim(-Width/2.0-2,Width/2.0+2)
-#        plt.ylim(-Width/2.0-2,Width/2.0+7)
-#        plt.grid()
-#        #print("W shape {0}".format(np.shape(W)))
-#        #print("W ha {0}".format(W))
-#        ani = animation.FuncAnimation(fig, animate, np.arange(0, len(W)),
-#                                      interval=25, blit=False, init_func=init)
-#        
-#        ani.save(args[11]+"/Anime"+args[12]+".mp4", fps=15)
+    # Animation
+    fig = plt.figure()
+    ax = plt.axes()
+    #P.ShowAnime(fig,ax)
+    lines = [[] for q in range(Robots)]
+    #colors = ["red", "blue", "yellow", "green", "purple"]
+    colors = ["red","blue","yellow","green","purple","coral","darkgoldenrod","greenyellow", \
+                       "aqua","indigo","lightpink","grey"]
+    for tt in range(Robots):
+        lines[tt], = ax.plot([],[], 'X-', lw=1, markersize=10, color = colors[tt])
+    #    #line2, = ax.plot([],[], 'X-', lw=1, markersize=10, color = "blue")
+    time_template = 'time = %.1fs'
+    time_text = ax.text(0.05, 0.9, '', transform=ax.transAxes)
+    
+    def init():
+        for ttt in range(Robots):
+            lines[ttt].set_data([], [])
+        #line2.set_data([], [])
+        time_text.set_text('')
+        #return line1, line2, time_text
+        return lines, time_text
+    
+    
+    TM_thin = 1
+    Index = int(len(W[0])/Robots)-1
+    #print(Index)
+    def animate(i):
+        thisx=[[] for x_num in range(Robots)]
+        thisy=[[] for y_num in range(Robots)]
+        c = 0
+        while c < Index:
+            for r_num in range(Robots):
+                thisx[r_num].append(W[i*TM_thin][r_num*(Index+1)+c])
+                thisy[r_num].append(W[i*TM_thin][r_num*(Index+1)+c+1])
+                #thisx2.append(W[i*TM_thin][Index+c])
+                #thisy2.append(W[i*TM_thin][Index+c+1])
+            c += 2
+            
+        #line1.set_data(thisx1, thisy1)
+        #line2.set_data(thisx2, thisy2)
+        for tttt in range(Robots):
+            lines[tttt].set_data(thisx[tttt], thisy[tttt])
+        time_text.set_text("Epoch: {0}".format(int(i)))
+        #return line1, line2, time_text
+        return lines, time_text
+    
+    for n in Nodes:
+        c = patches.Circle(xy=n,radius=0.2,color="blue")
+        ax.add_patch(c)
+        #ax.plot(w[0],w[1],"X", color="red", markersize=10)
+       
+    #plt.xlim(-22,22)
+    #plt.ylim(-22,27)
+    plt.xlim(-2,Width+2)
+    plt.ylim(-2,Width+7)
+    plt.grid()
+    #print("W shape {0}".format(np.shape(W)))
+    #print("W ha {0}".format(W))
+    ani = animation.FuncAnimation(fig, animate, np.arange(0, len(W)),interval=25, blit=False, init_func=init)
+    ani.save(args[7]+"/Anime_SOM_Init.mp4", fps=15)
 #    
-#    # Initial Condition Plotting
-#    fig2 = plt.figure()
-#    ax2 = plt.axes()
-#    #ax2.set_xlim(-5, 5)
-#    #ax2.set_ylim(-5, 5)
-#    P.StaticPlot2(fig2,ax2,0,[-Width/2.0-2,Width/2.0+2],[-Width/2.0-2,Width/2.0+7],[[0,0],MaxRange],Freq,HopNum,True,"./"+args[11]+"/Init"+args[12]+".png")
+    # Initial Condition Plotting
+    fig2 = plt.figure()
+    ax2 = plt.axes()
+    #ax2.set_xlim(-5, 5)
+    #ax2.set_ylim(-5, 5)
+    P.StaticPlot2(fig2,ax2,0,[-Width/2.0-2,Width/2.0+2],[-Width/2.0-2,Width/2.0+7],[[0,0],MaxRange],Freq,HopNum,True,args[7]+"/InitPath_SOM.png")
 #    
     # Final Condition Plogging
     fig3 = plt.figure()
     ax3 = plt.axes()
-    #P.StaticPlot2(fig3,ax3,last,[-Width/2.0-2,Width/2.0+2],[-Width/2.0-2,Width/2.0+3],[[0,0],MaxRange],Freq,HopNum,True,args[7]+"/Init_Path_SOM_G0="+str(G0s[int(args[4])])+".png")
-    P.StaticPlot2(fig3,ax3,last,[-2,Width+2],[-2,Width+3],[[0,0],MaxRange],Freq,HopNum,True,args[7]+"/Init_Path_SOM_G0="+str(G0s[int(args[4])])+".png")
+    P.StaticPlot2(fig3,ax3,last,[-2,Width+2],[-2,Width+3],[[0,0],MaxRange],Freq,HopNum,True,args[7]+"/Final_Path_SOM_G0="+str(G0s[int(args[3])])+".png")
 #    
 #    if last>200:
 #        fig4 = plt.figure()

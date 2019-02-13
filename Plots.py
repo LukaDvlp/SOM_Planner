@@ -86,9 +86,11 @@ class Plots():
             #ax.plot(X_[rrr],Y_[rrr],"X",color=self.colors[rrr])
             Num=0
             #for Num in range(int(HopNum/Step)):
-            ax.plot(0,0,"*",color=self.colors[Num],markersize=15)
+            #ax.plot(0,0,"*",color=self.colors[Num],markersize=15)
+            ax.plot(0,0,"*",color=self.colors[rrr],markersize=15)
             for Num in range(len(X_[rrr])):
-                ax.plot(X_[rrr][Num],Y_[rrr][Num],"*",color=self.colors[Num],markersize=15)
+                #ax.plot(X_[rrr][Num],Y_[rrr][Num],"*",color=self.colors[Num],markersize=15)
+                ax.plot(X_[rrr][Num],Y_[rrr][Num],"*",color=self.colors[rrr],markersize=15)
                 #print("Num desu {0}".format(Num))#ax.plot(X_[rrr][Num],Y_[rrr][Num],"*",color=self.colors[Num],markersize=15)
                 #print("X_ desu {0}".format(X_))
                 Num+=1

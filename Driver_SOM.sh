@@ -11,17 +11,17 @@ fi
 mkdir ${Dir}
 :>| ${csv}
 
-GNum=36
-GPosX=10
-GPosY=10
+GNum=121
+#GPosX=10
+#GPosY=10
 AddGoalNum=2
-MaxIte=20
+MaxIte=1500
 
 P1_g=1
 P2_g=0
 P3_g=2
 P4_g=1
-P1_s=1
+P1_s=0
 P2_s=1
 P3_s=1
 P4_s=1
@@ -34,5 +34,6 @@ Loop2=(0)
 python3 ./CreateWorld_AA.py ${GNum} 
 
 #python3 ./Init_Solution_GA.py ${MaxIte} ${P1_g} ${P2_g} ${P3_g} ${P4_g} ${Dir} ${GPosX} ${GPosY}
-python3 ./Init_Solution_SOM.py ${GNum} ${MaxIte} ${P1_s} ${P2_s} ${P3_s} ${P4_s} ${Dir} ${GPosX} ${GPosY}
+#python3 ./Init_Solution_SOM.py ${GNum} ${MaxIte} ${P1_s} ${P2_s} ${P3_s} ${P4_s} ${Dir} ${GPosX} ${GPosY}
+python3 ./Init_Solution_SOM.py ${GNum} ${MaxIte} ${P1_s} ${P2_s} ${P3_s} ${P4_s} ${Dir}
 

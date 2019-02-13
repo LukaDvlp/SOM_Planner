@@ -22,17 +22,18 @@ import random,copy,csv,sys,pickle,time
 from operator import itemgetter
 args = sys.argv # mu, alpha, total neuron, G0, Robot Number, Node Number, badged, ComRange
 #from Init_Solution_SOM import WyPts
-
+#GPoses = [[[],[]],[[],[]]]
 class PathAdapt():
     
-    def __init__(self,pos,Nodes,WyPts,mu,alpha,Robots,HopNum,MaxRange,r,G,Minimum,travel_budged,BS,Freq,Max_Ite): #mu:Learning Ratio, alpha: Decreasing Ratio, Minimum: Allowable distance Error
+    def __init__(self,pos,Nodes,WyPts,mu,alpha,Robots,HopNum,MaxRange,r,G,Minimum,travel_budged,BS,Freq,Max_Ite,GPos): #mu:Learning Ratio, alpha: Decreasing Ratio, Minimum: Allowable distance Error
         #self.alpha = alpha
         #self.beta = beta
         self.mu = mu
         self.alpha = alpha
         #self.delta = delta
         #self.sigma = 1
-        self.goal = [(float(args[8]),float(args[9]))] 
+        #self.goal = [(float(args[8]),float(args[9]))] 
+        self.goal = GPos
         self.Nodes = Nodes
         self.WyPts = WyPts
         self.MaxRange = MaxRange   #MaximumCommunication Range
@@ -442,7 +443,7 @@ class PathAdapt():
         #
         #return MoveRobtosID
         
-    def NetworkPreservation2(self,Wp,i): # No cooperation
+    def NetworkPreservation2(self,Wp,kk): # No cooperation
         #Robots_path = [[] for k in range(Step)]
         Robots_path = []
         MoveRobots = None
@@ -452,7 +453,7 @@ class PathAdapt():
         for r in range(self.Robots):
             #print("r desu {0}".format(r))
             #for j in range(Step):    
-            Robots_path.append(Wp[r][i])
+            Robots_path.append(Wp[r][kk])
             #j+=1
         
         # Get lists of visible/isolated robots
@@ -466,28 +467,23 @@ class PathAdapt():
         #print("\n\n R_nvPos in Preservation2 desu {0}".format(R_nvPos))
         if len(R_nv)>0 and len(R_v)>=0:
         # Maintain network topology
-            self.backhome(R_nv,Wp,i)
-            MoveRobots = [[[rnv.ID,i]] for rnv in R_nv]
-            #self.Refine(R_v,R_nv,Wp,i)
+            self.backhome(R_nv,Wp,kk)
+            MoveRobots = [[[rnv.ID,kk]] for rnv in R_nv]
+            #self.Refine(R_v,R_nv,Wp,kk)
         else:
             #print("No R_nv")
             pass
         
         return MoveRobots
-        #MoveRobotsID = []
-        #for rnv in range(len(R_nv)):
-        #    for mv in MoveRobots[rnv]
-        #       MoveRobotsID.append([mv.ID,i])
-        #
-        #return MoveRobtosID
         
-    def backhome(self,R_nv,Wp,i):
+    def backhome(self,R_nv,Wp,kk):
         dis=[]
         for rnv in R_nv:
-            #dis.append(self.TwoD_Dis(rnv.pos,self.BS.pos))
-            #Wp[rnv.ID][i] = self.CheckPoint(rnv.pos,self.BS.pos)
-            dis.append(self.TwoD_Dis(rnv.pos,self.goal[0]))
-            Wp[rnv.ID][i] = self.CheckPoint(rnv.pos,self.goal[0])
+            #dis.append(self.TwoD_Dis(rnv.pos,self.goal[0]))
+            dis.append(self.TwoD_Dis(rnv.pos,self.goal[rnv.ID][int(kk/self.Freq)-1]))
+            #Wp[rnv.ID][i] = self.CheckPoint(rnv.pos,self.goal[0])
+            Wp[rnv.ID][kk] = self.CheckPoint(rnv.pos,self.goal[rnv.ID][int(kk/self.Freq-1)])
+            #print("rnv.ID:{0},int(kk/self.Freq)-1:{1},kk:{2}".format(rnv.ID,int(kk/self.Freq)-1,kk))
         #print("No R_v, We all backed home")
 
     def RewardPropagation(self,Wp,r,i,Max): # WayPts, robot ID, Waypoint ID
@@ -706,7 +702,7 @@ class PathAdapt():
                     if kk==1:
                         pass
                     else:
-                        #print("kk desu {0}".format(kk))
+                        #print("kk desu {0},self.Freq ha {1}".format(kk,self.Freq))
                         #MoveRobotID = self.NetworkPreservation(self.WyPts,kk)
                         #self.NetworkPreservation(self.WyPts,kk)
                         #MoveRobot = self.NetworkPreservation(self.WyPts,kk)    # Cooperation
