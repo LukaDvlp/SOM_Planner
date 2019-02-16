@@ -69,7 +69,8 @@ class Plots():
             for jj in range(int((self.Index+1)/2)):
                 x[rr].append(self.W[ite][rr*(self.Index+1)+p])
                 y[rr].append(self.W[ite][rr*(self.Index+1)+p+1])
-                if (jj-1)%Step==0 and jj-1!=0:
+                #if (jj-1)%Step==0 and jj-1!=0:
+                if jj%Step==0 and jj!=0:
                     X_[rr].append(self.W[ite][rr*(self.Index+1)+p])
                     Y_[rr].append(self.W[ite][rr*(self.Index+1)+p+1])
                     #X_[rr].append(self.W[ite][rr*(self.Index+1)+p+2])

@@ -2,7 +2,7 @@ import pickle,random,sys
 args=sys.argv
 
 
-def NodeGen(width,height,interval):
+def NodeGen1(width,height,interval): #[0,x,Width],[0,y,Width]
     #Nodes = []
     Nodes = {}
     nodes = []
@@ -18,6 +18,23 @@ def NodeGen(width,height,interval):
         #while j <= 0.5*width:
         while j <= width:
             #Nodes.append((i,j))
+            Nodes[n]=((i,j))
+            nodes.append((i,j))
+            n += 1
+            j += interval
+        i += interval
+
+    return Nodes,nodes
+
+def NodeGen2(width,height,interval): #[-0.5*Width,x,0.5Width],[-0.5*Width,y,0.5*Width]
+    Nodes = {}
+    nodes = []
+    i = -0.5*width
+    j = -0.5*height
+    n = 1
+    while i <= 0.5*height:
+        j = -0.5*height
+        while j <= 0.5*width:
             Nodes[n]=((i,j))
             nodes.append((i,j))
             n += 1
@@ -60,8 +77,7 @@ GNum = int(args[1])
 Width = 40
 SR = 4 #Sensing Range
 
-#Nodes,nodes=NodeGen_Rand2(Width,Width,GNum)
-Nodes,nodes=NodeGen(Width,Width,SR)
+Nodes,nodes=NodeGen2(Width,Width,SR)
 
 
 with open("Init_Goals_Dic.pickle",mode="wb") as fN:

@@ -77,6 +77,7 @@ class PathAdapt():
     
     def NHF(self,d,G):
         #d = float(args[13])*d 
+        d = 0.01*d 
         A = np.e**(-(d/G)**2)
         #A = np.e**(-(d/G*10)**2)
         #print("Neighbourhood value desu {0}".format(A))
@@ -136,11 +137,13 @@ class PathAdapt():
                     else:
                         TD[r] += self.TwoD_Dis(WyPts[r][num-1],WyPts[r][num])
                     Dis[r] += self.TwoD_Dis(WyPts[r][num], node)
+                print("TD[r] desu {0} at r is {1}".format(TD[r],r))
                 if TD[r] < self.travel_budged[r]:
-                    Value[r] = Dis[r]*TD[r]
+                    #Value[r] = Dis[r]*TD[r]
+                    Value[r] = Dis[r]+TD[r]
                 else:
                     Value[r] = float("inf")
-        #print("\n\n Value desu {0}".format(Value))  
+        print("\n\n Value desu {0}".format(Value))  
         WinRobo =  Value.index(min(Value))
         #if WinRobo == float("inf"):
         if Value[WinRobo] == float("inf"):
@@ -480,6 +483,7 @@ class PathAdapt():
         dis=[]
         for rnv in R_nv:
             #dis.append(self.TwoD_Dis(rnv.pos,self.goal[0]))
+            print("self.goal[rnv.ID][int(kk/self.Freq)-1] desu {0} when rnv.ID is {1} int(kk/self.Freq)-1 is {2}".format(self.goal[rnv.ID][int(kk/self.Freq)-1],rnv.ID,int(kk/self.Freq)-1))
             dis.append(self.TwoD_Dis(rnv.pos,self.goal[rnv.ID][int(kk/self.Freq)-1]))
             #Wp[rnv.ID][i] = self.CheckPoint(rnv.pos,self.goal[0])
             Wp[rnv.ID][kk] = self.CheckPoint(rnv.pos,self.goal[rnv.ID][int(kk/self.Freq-1)])
@@ -580,13 +584,26 @@ class PathAdapt():
                 #print("\n\n r2 desu {0}".format(r2))
                 for w in WyPts[r2[0]]: #WyPts[RobotID]
                     nghbr_id = WyPts[r2[0]].index(w)
-                    print("nghbr_id is {0} at RobotID is {1}".format(nghbr_id,r2[0]))
+                    print("nghbr_id is {0} at RobotID is {1}, w is {2}".format(nghbr_id,r2[0],w))
                     if nghbr_id!=0 and nghbr_id!=r2[1] and [r2[0],nghbr_id] not in IDlist and nghbr_id is not None:
                         w_=self.Nghbr_Adapt(w,WyPts[r2[0]][r2[1]],r2[1],nghbr_id,self.G)
                         WyPts[r2[0]][nghbr_id] = w
                     else:
                         pass
                     
+    def DuplicationCheck(self,node,RIndex):
+        print("node:{0},RIndex:{1}".format(node,RIndex))
+        for r in range(self.Robots):
+            if r==RIndex:
+                pass
+            else:
+                for i in range(self.HopNum):
+                    if i==0:
+                        pass
+                    elif self.TwoD_Dis(self.WyPts[r][i],node) < 0.1:
+                        print("Duplication Hatsudou!")
+                        self.WyPts[r][i]=self.WyPts[r][i-10]
+
     def Process(self):
         i=0
         P_R=0
@@ -659,6 +676,8 @@ class PathAdapt():
                         self.WyPts[RIndex] = WyPts_Tmp[RIndex]
                         ErrorCount += 1
                         Error=max(Error,self.TwoD_Dis(self.WyPts[RIndex][win_id_store[RIndex]],node))
+                        #if i > 800: #DupTh
+                        #    self.DuplicationCheck(node,RIndex)
                         #print("\n\n Error at iteration {0} desu {1} Node ha {2} WyPt ha {3}".format(i,Error,node,self.WyPts[RIndex][win_id_store[RIndex]]))
                         #self.NodeStatus[node]=[1,self.CheckReach(node,self.WyPts[RIndex][win_id_store[RIndex]]),RIndex,win_id_store[RIndex],self.RewardPropagation(self.WyPts,RIndex,win_id_store[RIndex],self.Max)]
                         #print("\n\n RIndex desu {0}, win_id desu {1}".format(RIndex, win_id_store[RIndex]))
@@ -686,9 +705,9 @@ class PathAdapt():
             #print("NodeStatus at iteration {0} desu {1}".format(i,self.NodeStatus))
             if i % 1 == 0:     # one in ten epoch, one waypoint in Waypoints, add constraint
                 #print("Constraint Hatudou!")
-                kk=1
+                kk=0
                 while kk <= self.HopNum:
-                    if kk==1:
+                    if kk==0:
                         pass
                     else:
                         #print("kk desu {0},self.Freq ha {1}".format(kk,self.Freq))
@@ -752,3 +771,4 @@ class PathAdapt():
         #listData.append(TD) 
         #listData.append(rewards) 
     
+

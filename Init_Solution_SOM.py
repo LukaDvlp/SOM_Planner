@@ -81,7 +81,7 @@ if __name__=="__main__":
     #Parameters
     G0s = [10.0,0.1,0.01]
     Mus = [0.1,0.5,0.9]
-    Alphas = [0.01,0.05,0.5]
+    Alphas = [0.01,0.04,0.5]
     NIs = [1,2,3]
     NNum = int(args[1])
     Max_Ite=int(args[2])
@@ -98,8 +98,8 @@ if __name__=="__main__":
     
     MaxRange = 0.1
     th = 0
-    Robots = 2
-    GPos = [[[0,20],[0,40]],[[20,0],[40,0]]]
+    Robots = 4
+    GPos = [[[0,10],[0,20]],[[0,-10],[0,-20]],[[10,0],[20,0]],[[-10,0],[-20,0]]]
     HopNum = int(NNum*NIndex/Robots) 
     #Freq = HopNum-1   #Constraint Frequency
     Freq = int(HopNum/2)   #Constraint Frequency
@@ -110,6 +110,7 @@ if __name__=="__main__":
     Conv=0
     travel_budged = []
     for b in range(Robots):
+        #travel_budged.append(100+b*1000)
         travel_budged.append(10000)
     WyPts = InitWayPoints([],r,pos,HopNum,Robots)
     WyPts = AddPos(pos,WyPts,Robots,0)
@@ -216,8 +217,8 @@ if __name__=="__main__":
        
     #plt.xlim(-22,22)
     #plt.ylim(-22,27)
-    plt.xlim(-2,Width+2)
-    plt.ylim(-2,Width+7)
+    plt.xlim(-0.5*Width-2,0.5*Width+2)
+    plt.ylim(-0.5*Width-2,0.5*Width+7)
     plt.grid()
     #print("W shape {0}".format(np.shape(W)))
     #print("W ha {0}".format(W))
@@ -234,7 +235,7 @@ if __name__=="__main__":
     # Final Condition Plogging
     fig3 = plt.figure()
     ax3 = plt.axes()
-    P.StaticPlot2(fig3,ax3,last,[-2,Width+2],[-2,Width+3],[[0,0],MaxRange],Freq,HopNum,True,args[7]+"/Final_Path_SOM_G0="+str(G0s[int(args[3])])+".png")
+    P.StaticPlot2(fig3,ax3,last,[-0.5*Width-2,0.5*Width+2],[-0.5*Width-2,0.5*Width+3],[[0,0],MaxRange],Freq,HopNum,True,args[7]+"/Final_Path_SOM_G0="+str(G0s[int(args[3])])+".png")
 #    
 #    if last>200:
 #        fig4 = plt.figure()
